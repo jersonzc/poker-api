@@ -5,6 +5,6 @@ import (
 	"net/http"
 )
 
-func PlayerServer(req *http.Request, res http.ResponseWriter) {
-	fmt.Fprintf(res, "20")
+func PlayerServer(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "20")
 }
