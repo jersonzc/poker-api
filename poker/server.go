@@ -1,4 +1,4 @@
-package poker_api
+package poker
 
 import (
 	"fmt"
