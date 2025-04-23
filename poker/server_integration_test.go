@@ -6,17 +6,26 @@ import (
 	"testing"
 )
 
-type InMemoryPlayerStore struct{}
-
-func (i *InMemoryPlayerStore) GetPlayerScore(name string) int {
-	return 123
+func NewInMemoryPlayerStore() *InMemoryPlayerStore {
+	return &InMemoryPlayerStore{map[string]int{}}
 }
 
-func (i *InMemoryPlayerStore) RecordWin(name string) {}
+type InMemoryPlayerStore struct {
+	store map[string]int
+}
+
+func (i *InMemoryPlayerStore) RecordWin(name string) {
+	i.store[name]++
+}
+
+func (i *InMemoryPlayerStore) GetPlayerScore(name string) int {
+	return i.store[name]
+}
 
 func TestRecordingWinsAndRetrievingThem(t *testing.T) {
-	store := InMemoryPlayerStore{}
-	server := PlayerServer{&store}
+	store := NewInMemoryPlayerStore()
+	server := PlayerServer{store}
+
 	player := "Pepper"
 
 	server.ServeHTTP(httptest.NewRecorder(), newPostWinRequest(player))
