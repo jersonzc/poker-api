@@ -24,7 +24,7 @@ func (i *InMemoryPlayerStore) GetPlayerScore(name string) int {
 
 func TestRecordingWinsAndRetrievingThem(t *testing.T) {
 	store := NewInMemoryPlayerStore()
-	server := PlayerServer{store}
+	server := NewPlayerServer(store)
 
 	player := "Pepper"
 
